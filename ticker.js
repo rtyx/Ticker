@@ -1,27 +1,30 @@
-var headlines = document.getElementsByClassName('list');
-var container = document.getElementById('container');
-var moveLeft = 100;
-var firstChild = headlines[0];
-var movingAnimation;
+/* eslint-env node, jquery */
 
-function moveHeadLines() {
-    moveLeft = moveLeft - 2;
-    container.style.left = moveLeft + "px";
-    if (firstChild.offsetWidth + container.offsetLeft < 0) {
-        var removed = container.removeChild(headlines[0]);
-        container.appendChild(removed);
-        moveLeft = moveLeft + firstChild.offsetWidth;
-        firstChild = headlines[0];
+$(document).ready(function(){
+    var movingAnimation;
+
+    function moveHeadLines() {
+        $('#container').css({
+            left: "-=2px"
+        });
+        console.log($('a').first().offset().left + $('a').first().outerWidth());
+        if ($('a').first().offset().left + $('a').first().outerWidth() <= 0) {
+            var firstWidth = $('a').first().outerWidth();
+            $('a').first().detach().appendTo('#container');
+            $('#container').css({
+                left: "+=" + firstWidth
+            });
+        }
+        movingAnimation = window.requestAnimationFrame(moveHeadLines);
     }
+
+    $('#container').on('mouseover', function stopThere() {
+        window.cancelAnimationFrame(movingAnimation);
+    });
+
+    $('#container').on('mouseout', function resume() {
+        movingAnimation = window.requestAnimationFrame(moveHeadLines);
+    });
+
     movingAnimation = window.requestAnimationFrame(moveHeadLines);
-}
-
-container.addEventListener("mouseover", function stopThere() {
-    window.cancelAnimationFrame(movingAnimation);
 });
-
-container.addEventListener("mouseout", function resume() {
-    movingAnimation = window.requestAnimationFrame(moveHeadLines);
-});
-
-movingAnimation = window.requestAnimationFrame(moveHeadLines);

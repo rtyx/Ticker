@@ -26,6 +26,7 @@ a:hover {
     width: 1500px;
     white-space: nowrap;
     font-size: 0;
+    left: 0;
 }
 
 #main {
