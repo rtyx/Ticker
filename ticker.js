@@ -1,16 +1,30 @@
 /* eslint-env node, jquery */
 
 $(document).ready(function(){
+
+    var templates = document.querySelectorAll('script[type="text/handlebars"]');
+
+    Handlebars.templates = Handlebars.templates || {};
+
+    Array.prototype.slice.call(templates).forEach(function(script) {
+        Handlebars.templates[script.id] = Handlebars.compile(script.innerHTML);
+    });
+
+    $.getJSON('http://127.0.0.1:8080/links.json', function(json) {
+        $('#container').html(Handlebars.templates.results(
+            {json: json}
+        ));
+    });
+
     var movingAnimation;
 
     function moveHeadLines() {
         $('#container').css({
             left: "-=2px"
         });
-        console.log($('a').first().offset().left + $('a').first().outerWidth());
         if ($('a').first().offset().left + $('a').first().outerWidth() <= 0) {
             var firstWidth = $('a').first().outerWidth();
-            $('a').first().detach().appendTo('#container');
+            $('a').first().appendTo('#container');
             $('#container').css({
                 left: "+=" + firstWidth
             });

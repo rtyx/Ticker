@@ -13,19 +13,18 @@
 
   <div id="main">
       <div id="container">
-              <a href="www.google.es" class="list" >Trump wins elections...</a>
-              <a href="www.google.es" class="list" >US in war with Mexico...</a>
-              <a href="www.google.es" class="list" >Massive emigration to Canada...</a>
-              <a href="www.google.es" class="list" >Canada builds a wall...</a>
-              <a href="www.google.es" class="list" >Melania Trump becomes black...</a>
-              <a href="www.google.es" class="list" >Trump divorces Melania...</a>
-              <a href="www.google.es" class="list" >Putin announces marriage with Trump...</a>
+          <script id="results" type="text/handlebars">
+              {{#json}}
+                  <a href={{link}} class="list" >{{title}}</a>
+              {{/json}}
+          </script>
       </div>
   </div>
 
   <div id="finishline">
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
   <script src="ticker.js"></script>
 
